@@ -32,7 +32,16 @@ class CallManager(req: RequestInfo) {
         client.newCall(requestInfo).enqueue(object: Callback {
             override fun onResponse(call: Call, response: Response) {
                 LogManager.instance.consoleLog(LogType.CHECK_HTTPINFO, response.code.toString())
-                response.body?.let { LogManager.instance.consoleLog(LogType.CHECK_HTTPINFO, it.string()) }
+                response.body?.let {
+                    // 널이 아니면 여길 탐,
+                    // Swift 의 경우엔 if let obj = null 이 될만한 오브젝트 인데, 이걸 이렇게 태우는듯 함
+                    // 이미,. 코틀린은 람다가 거의 생활화가 되어 있는듯 함
+
+                    LogManager.instance.consoleLog(LogType.CHECK_HTTPINFO, it.string())
+
+                    val resInfo = ResInfo()
+                    resInfo.parseData(it.string())
+                }
             }
 
             override fun onFailure(call: Call, e: IOException) {
