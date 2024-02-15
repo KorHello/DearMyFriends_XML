@@ -1,6 +1,7 @@
 package com.devhouse.dearmyfriends.item
 
 import com.devhouse.dearmyfriends.base.DefineManager
+import com.devhouse.dearmyfriends.mng.BodyType
 import com.devhouse.dearmyfriends.mng.LogManager
 import com.devhouse.dearmyfriends.mng.LogType
 import com.devhouse.dearmyfriends.mng.PathType
@@ -8,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import org.json.JSONObject
+import java.lang.Exception
 
 data class RequestInfo (
     var url: String = "",
@@ -31,20 +33,36 @@ data class RequestInfo (
 data class ResInfo (
     var resCode: String = "",
     var resMsg: String = "",
-    var bodyType: String = "",
+    var bodyType: BodyType = BodyType.NONE,
 
-    var bodyDic: JsonObject? = null,
-    var bodyArray: JsonArray? = null
+    var bodyDic: JsonObject = JsonObject(),
+    var bodyArray: JsonArray = JsonArray()
 ) {
     fun parseData(body: String) {
         val jsonObj = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
 
-        this.resCode = jsonObj.get("code").asString
-        this.resMsg = jsonObj.get("msg").asString
+        try {
+            this.resCode = jsonObj.get("code").asString
+            this.resMsg = jsonObj.get("msg").asString
 
-        val bType = jsonObj.get("")
+            val bType = jsonObj.get("type").asString
+            if (bType == "M" || bType == "L") {
+                val body = jsonObj.get("body").asJsonObject
+                if (bType == "M") {
+                    this.bodyType = BodyType.MAP
+                    this.bodyDic = body.asJsonObject
+                } else {
+                    this.bodyType = BodyType.LIST
+                    this.bodyArray = body.asJsonArray
+                }
+            } else {
+                this.bodyType = BodyType.NONE
+            }
 
-        LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resCode)
-        LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resMsg)
+            LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resCode)
+            LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resMsg)
+        } catch (e: Exception) {
+            LogManager.instance.consoleLog(LogType.CHECK_HTTPERROR, e.localizedMessage)
+        }
     }
 }
