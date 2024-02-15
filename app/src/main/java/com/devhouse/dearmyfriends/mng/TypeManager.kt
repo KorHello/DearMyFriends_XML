@@ -23,3 +23,11 @@ enum class LogType(var title: String) {
 
     CHECK_ITEMDATA("checkItemData_")
 }
+
+enum class PopType {
+    MSG, TOAST, CONFIRM
+}
+
+enum class GetDeviceInfoType {
+    ALL, VERSION_CHECK, CALL_INTRO_API, API_HEADER
+}

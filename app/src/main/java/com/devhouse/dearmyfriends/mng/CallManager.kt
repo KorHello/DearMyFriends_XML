@@ -1,5 +1,6 @@
 package com.devhouse.dearmyfriends.mng
 
+import com.devhouse.dearmyfriends.item.DeviceInfo
 import com.devhouse.dearmyfriends.item.RequestInfo
 import com.devhouse.dearmyfriends.item.ResInfo
 import okhttp3.Call
@@ -20,12 +21,15 @@ class CallManager(req: RequestInfo) {
     }
 
     fun postCall(resAction: ResAction) {
+        val deviceInfo: DeviceInfo = DeviceInfo()
+        deviceInfo.getDeviceInfo(GetDeviceInfoType.API_HEADER)
+
         val apiUrl = reqInfo.url
         val requestInfo = Request.Builder().url(apiUrl)
             .post(RequestBody.create(jsonType, reqInfo.param.toString()))
-            .addHeader("uuid", "AOSTest")
-            .addHeader("osType", "I")
-            .addHeader("contentInfo", "call Test")
+            .addHeader("uuid", deviceInfo.uuid)
+            .addHeader("osType", "A")
+            .addHeader("contentInfo", "modelName: "+ deviceInfo.modelName + ", osVersion: " + deviceInfo.osVer)
             .build()
 
         val client = OkHttpClient()

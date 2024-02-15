@@ -15,7 +15,6 @@ class IntroActivity: BaseActivity(R.layout.activity_intro) {
 
         var cmmVM = CommonViewModel()
         cmmVM.callVersionInfo()
-
 //        Thread.sleep(2000)
 //        val intent = Intent(this, MainActivity::class.java)
 //        startActivity(intent)

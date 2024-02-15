@@ -12,7 +12,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -66,6 +66,9 @@ dependencies {
 
     // constraint
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
+
+    // rx
+    implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
     // HTTP
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
