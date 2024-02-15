@@ -66,4 +66,8 @@ dependencies {
 
     // constraint
     implementation("androidx.constraintlayout:constraintlayout:2.2.0-alpha13")
+
+    // HTTP
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
