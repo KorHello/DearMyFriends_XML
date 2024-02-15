@@ -19,5 +19,7 @@ enum class LogType(var title: String) {
     CHECK_REQINFO("reqInfo_"),
     CHECK_HTTPINFO("resInfo_"),
     CHECK_HTTPERROR("CallError_"),
-    CHECK_RESINFO("resParseInfo_")
+    CHECK_RESINFO("resParseInfo_"),
+
+    CHECK_ITEMDATA("checkItemData_")
 }
