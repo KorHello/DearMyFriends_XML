@@ -7,7 +7,8 @@ enum class ApiType(var value: String) {
 
 enum class PathType(var pathString: String) {
     NONE(""),
-    VERSION_CHECK("/cmm/getVersion.dmfap")
+    VERSION_CHECK("/cmm/getVersion.dmfap"),
+    GET_SENTENCE("/stn/getTodaySentenceList.dmfap")
 }
 
 enum class BodyType {
