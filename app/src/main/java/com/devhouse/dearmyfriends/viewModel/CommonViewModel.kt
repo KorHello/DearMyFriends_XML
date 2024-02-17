@@ -20,20 +20,13 @@ class CommonViewModel: ResAction {
     var cmmMsgBox: MsgPopInfo = MsgPopInfo()
     var testString:String = ""
 
-    lateinit var introV: IntroActivity
+    var introV: IntroActivity
 
-    companion object {
-        val instance = CommonViewModel()
-    }
-
-    constructor() {
-
-    }
     constructor(intro: IntroActivity) {
         this.introV = intro
     }
 
-    fun callVersionInfo(baseActivity: BaseActivity) {
+    fun callVersionInfo() {
         val deviceInfo = DeviceInfo()
         deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
 

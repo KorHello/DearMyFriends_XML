@@ -14,8 +14,8 @@ class IntroActivity: BaseActivity(R.layout.activity_intro) {
     override fun initAction() {
         super.initAction()
 
-        var cmmVM = CommonViewModel()
-        cmmVM.callVersionInfo(this)
+        val cmmVM = CommonViewModel(this)
+        cmmVM.callVersionInfo()
     }
 
     fun updateAction(state: Boolean, info: VersionInfo?) {

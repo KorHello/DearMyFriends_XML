@@ -15,11 +15,6 @@ class SharedManager {
         pref = BaseApplication().getAppContext().getSharedPreferences("DMF", Context.MODE_PRIVATE)
     }
 
-//    constructor(activity: BaseActivity) {
-//        this.activity = activity
-//        this.pref = this.activity.getPreferences(Context.MODE_PRIVATE)
-//    }
-
     /* about preference */
     fun setString(key: SharedKey, value: String) {
         val editor = pref.edit()
