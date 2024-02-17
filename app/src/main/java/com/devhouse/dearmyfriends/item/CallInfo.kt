@@ -38,6 +38,12 @@ data class ResInfo (
     var bodyDic: JsonObject = JsonObject(),
     var bodyArray: JsonArray = JsonArray()
 ) {
+    fun getErrorInfo() {
+        this.resCode = "9999"
+        this.resMsg = "통신 중 오류가 발생하였습니다, 잠시 후 다시 시도해주세요."
+        this.bodyType = BodyType.NONE
+    }
+
     fun parseData(body: String) {
         val jsonObj = Gson().fromJson<JsonObject>(body, JsonObject::class.java)
 

@@ -11,6 +11,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
+import java.util.concurrent.TimeUnit
 
 class CallManager(req: RequestInfo) {
     private val jsonType = "application/json".toMediaType()
@@ -32,7 +33,11 @@ class CallManager(req: RequestInfo) {
             .addHeader("contentInfo", "modelName: "+ deviceInfo.modelName + ", osVersion: " + deviceInfo.osVer)
             .build()
 
-        val client = OkHttpClient()
+        val client = OkHttpClient.Builder()
+            .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .build()
+
         client.newCall(requestInfo).enqueue(object: Callback {
             override fun onResponse(call: Call, response: Response) {
                 LogManager.instance.consoleLog(LogType.CHECK_HTTPINFO, response.code.toString())
@@ -50,6 +55,10 @@ class CallManager(req: RequestInfo) {
 
             override fun onFailure(call: Call, e: IOException) {
                 LogManager.instance.consoleLog(LogType.CHECK_HTTPERROR, e.toString())
+
+                val failInfo = ResInfo()
+                failInfo.getErrorInfo()
+                resAction.failAct(reqInfo.path, failInfo)
             }
         })
     }
@@ -57,5 +66,5 @@ class CallManager(req: RequestInfo) {
 
 interface ResAction {
     fun successAct(path: PathType, resInfo: ResInfo)
-    fun failAct(resInfo: ResInfo)
+    fun failAct(path: PathType, resInfo: ResInfo)
 }

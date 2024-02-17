@@ -55,6 +55,9 @@ class CommonViewModel: ResAction {
         }
     }
 
-    override fun failAct(resInfo: ResInfo) {
+    override fun failAct(path: PathType, resInfo: ResInfo) {
+        if(path == PathType.VERSION_CHECK) {
+            
+        }
     }
 }
