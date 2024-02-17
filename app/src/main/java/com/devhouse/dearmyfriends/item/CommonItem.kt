@@ -14,6 +14,18 @@ data class VersionInfo (
     var updateType: String = "",
     var showNote: String = ""
 ) {
+    fun checkUpdate(): Boolean {
+        val appInfo = DeviceInfo()
+        appInfo.getDeviceInfo(GetDeviceInfoType.ONLY_VERSION_CHECK)
+
+        var updateChk = false
+        val updateNumInt = updateNum.toInt()
+        if(updateNumInt > appInfo.appBuildNum) {
+            updateChk = true
+        }
+
+        return updateChk
+    }
 }
 
 data class DeviceInfo (
@@ -25,16 +37,23 @@ data class DeviceInfo (
     var appBuildNum: Int = 0
 ) {
     fun getDeviceInfo( type: GetDeviceInfoType) {
-        this.fcmKey = "test"
-        this.osVer = android.os.Build.VERSION.SDK_INT.toString()
-        this.modelName = android.os.Build.MODEL
-        this.uuid = getUUIDString()
-
-        if(type == GetDeviceInfoType.VERSION_CHECK || type == GetDeviceInfoType.ALL) {
+        if (type == GetDeviceInfoType.ONLY_VERSION_CHECK) {
             val appContext = BaseApplication().getAppContext()
             val packageInfo = appContext.packageManager.getPackageInfo("com.devhouse.dearmyfriends", 0)
             this.appVersion = packageInfo.versionName
             this.appBuildNum = packageInfo.versionCode
+        } else {
+            this.fcmKey = "test"
+            this.osVer = android.os.Build.VERSION.SDK_INT.toString()
+            this.modelName = android.os.Build.MODEL
+            this.uuid = getUUIDString()
+
+            if(type == GetDeviceInfoType.VERSION_CHECK || type == GetDeviceInfoType.ALL) {
+                val appContext = BaseApplication().getAppContext()
+                val packageInfo = appContext.packageManager.getPackageInfo("com.devhouse.dearmyfriends", 0)
+                this.appVersion = packageInfo.versionName
+                this.appBuildNum = packageInfo.versionCode
+            }
         }
     }
 

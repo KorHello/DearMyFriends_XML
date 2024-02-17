@@ -49,11 +49,12 @@ class CommonViewModel: ResAction {
         if(path == PathType.VERSION_CHECK) {
             // 데이터 파싱 테스트
             val data = Gson().fromJson<VersionInfo>(resInfo.bodyDic.toString(), VersionInfo::class.java)
-
+            if(introV != null) {
+                introV.updateAction(data.checkUpdate(), data)
+            }
         }
     }
 
     override fun failAct(resInfo: ResInfo) {
-
     }
 }

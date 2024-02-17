@@ -29,5 +29,5 @@ enum class PopType {
 }
 
 enum class GetDeviceInfoType {
-    ALL, VERSION_CHECK, CALL_INTRO_API, API_HEADER
+    ALL, VERSION_CHECK, CALL_INTRO_API, API_HEADER, ONLY_VERSION_CHECK
 }
