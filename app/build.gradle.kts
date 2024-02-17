@@ -70,6 +70,9 @@ dependencies {
     // rx
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
+    // ui
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+
     // HTTP
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation("com.google.code.gson:gson:2.10.1")
