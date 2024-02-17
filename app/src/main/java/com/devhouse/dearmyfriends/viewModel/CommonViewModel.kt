@@ -1,6 +1,7 @@
 package com.devhouse.dearmyfriends.viewModel
 
 import com.devhouse.dearmyfriends.IntroActivity
+import com.devhouse.dearmyfriends.base.BaseActivity
 import com.devhouse.dearmyfriends.item.DeviceInfo
 import com.devhouse.dearmyfriends.item.MsgPopInfo
 import com.devhouse.dearmyfriends.item.RequestInfo
@@ -32,7 +33,7 @@ class CommonViewModel: ResAction {
         this.introV = intro
     }
 
-    fun callVersionInfo() {
+    fun callVersionInfo(baseActivity: BaseActivity) {
         val deviceInfo = DeviceInfo()
         deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
 

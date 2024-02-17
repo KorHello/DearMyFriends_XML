@@ -2,16 +2,23 @@ package com.devhouse.dearmyfriends.mng
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.devhouse.dearmyfriends.base.BaseActivity
+import com.devhouse.dearmyfriends.base.BaseApplication
 
 class SharedManager {
-    private var activity: BaseActivity
     private var pref: SharedPreferences
 
-    constructor(activity: BaseActivity) {
-        this.activity = activity
-        this.pref = this.activity.getPreferences(Context.MODE_PRIVATE)
+    companion object{
+        val instance = SharedManager()
     }
+
+    init {
+        pref = BaseApplication().getAppContext().getSharedPreferences("DMF", Context.MODE_PRIVATE)
+    }
+
+//    constructor(activity: BaseActivity) {
+//        this.activity = activity
+//        this.pref = this.activity.getPreferences(Context.MODE_PRIVATE)
+//    }
 
     /* about preference */
     fun setString(key: SharedKey, value: String) {
@@ -32,5 +39,6 @@ class SharedManager {
 }
 
 enum class SharedKey(var key: String) {
-    NONE("")
+    NONE(""),
+    GET_DEVICEINFO_UUID("DMF_DEVICEINFO_UUID")
 }

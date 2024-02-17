@@ -1,7 +1,10 @@
 package com.devhouse.dearmyfriends.item
 
+import com.devhouse.dearmyfriends.base.BaseActivity
 import com.devhouse.dearmyfriends.base.BaseApplication
 import com.devhouse.dearmyfriends.mng.GetDeviceInfoType
+import com.devhouse.dearmyfriends.mng.SharedKey
+import com.devhouse.dearmyfriends.mng.SharedManager
 import com.google.gson.JsonObject
 import java.util.UUID
 
@@ -21,11 +24,11 @@ data class DeviceInfo (
     var appVersion: String = "",
     var appBuildNum: Int = 0
 ) {
-    fun getDeviceInfo(type: GetDeviceInfoType) {
+    fun getDeviceInfo( type: GetDeviceInfoType) {
         this.fcmKey = "test"
         this.osVer = android.os.Build.VERSION.SDK_INT.toString()
         this.modelName = android.os.Build.MODEL
-        this.uuid = UUID.randomUUID().toString()
+        this.uuid = getUUIDString()
 
         if(type == GetDeviceInfoType.VERSION_CHECK || type == GetDeviceInfoType.ALL) {
             val appContext = BaseApplication().getAppContext()
@@ -33,6 +36,22 @@ data class DeviceInfo (
             this.appVersion = packageInfo.versionName
             this.appBuildNum = packageInfo.versionCode
         }
+    }
+
+    fun getUUIDString(): String {
+        var uuidStr: String = ""
+
+        val sharedString = SharedManager.instance.getString(SharedKey.GET_DEVICEINFO_UUID)
+        if("".equals(sharedString)) {
+            uuidStr = UUID.randomUUID().toString()
+
+            // UUID 저장
+            SharedManager.instance.setString(SharedKey.GET_DEVICEINFO_UUID, uuidStr)
+        } else {
+            uuidStr = sharedString
+        }
+
+        return uuidStr
     }
 
     fun makeParam(): JsonObject {
