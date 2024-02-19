@@ -5,9 +5,11 @@
     android:layout_height="60dp">
 
     <TextView
-        android:gravity="center"
+        android:id="@+id/setting_list_cell_title"
+        android:text="Test"
+        android:layout_marginStart="16dp"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textAlignment="center"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

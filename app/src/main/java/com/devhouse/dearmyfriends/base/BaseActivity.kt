@@ -20,6 +20,7 @@ open class BaseActivity(layout: Int): ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
 
+        this.initView()
         this.initModel()
     }
 
@@ -32,6 +33,10 @@ open class BaseActivity(layout: Int): ComponentActivity() {
         } else {
             this.reloadAction()
         }
+    }
+
+    open fun initView() {
+
     }
 
     open fun initModel() {

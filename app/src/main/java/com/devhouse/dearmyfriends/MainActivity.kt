@@ -1,15 +1,20 @@
 package com.devhouse.dearmyfriends
 
+import android.content.Intent
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
+import android.widget.Button
 import android.widget.TextView
 import com.devhouse.dearmyfriends.base.BaseActivity
 import com.devhouse.dearmyfriends.item.Sentence
 import com.devhouse.dearmyfriends.viewModel.SentenceViewModel
+import com.devhouse.dearmyfriends.views.setting.SettingMainListView
 
-class MainActivity: BaseActivity(R.layout.activity_main) {
+class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
 
+    lateinit var settingBtn: Button
     lateinit var swipeView: View
     lateinit var contentLabel: TextView
     lateinit var writerLabel: TextView
@@ -20,12 +25,19 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 
     private val httpHandle: Handler = Handler()
 
-    override fun initModel() {
-        super.initModel()
+    override fun initView() {
+        super.initView()
 
+        settingBtn = findViewById(R.id.main_btn_setting)
         swipeView = findViewById(R.id.swipe_main_view)
         contentLabel = findViewById(R.id.sentence_title_label)
         writerLabel = findViewById(R.id.sentence_msg_label)
+
+        settingBtn.setOnClickListener(this)
+    }
+
+    override fun initModel() {
+        super.initModel()
 
         sentenceVM = SentenceViewModel(this)
         sentenceVM.getSetences()
@@ -33,6 +45,15 @@ class MainActivity: BaseActivity(R.layout.activity_main) {
 
     override fun initAction() {
         super.initAction()
+    }
+
+    override fun onClick(v: View?) {
+        v?.let { view: View ->
+            if(view.id == R.id.main_btn_setting) {
+                val moveSetting = Intent(this, SettingMainListView::class.java)
+                startActivity(moveSetting)
+            }
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
