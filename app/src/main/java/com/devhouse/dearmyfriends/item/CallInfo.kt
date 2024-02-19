@@ -53,13 +53,12 @@ data class ResInfo (
 
             val bType = jsonObj.get("type").asString
             if (bType == "M" || bType == "L") {
-                val body = jsonObj.get("body").asJsonObject
                 if (bType == "M") {
                     this.bodyType = BodyType.MAP
-                    this.bodyDic = body.asJsonObject
+                    this.bodyDic = jsonObj.get("body").asJsonObject
                 } else {
                     this.bodyType = BodyType.LIST
-                    this.bodyArray = body.asJsonArray
+                    this.bodyArray = jsonObj.get("body").asJsonArray
                 }
             } else {
                 this.bodyType = BodyType.NONE
