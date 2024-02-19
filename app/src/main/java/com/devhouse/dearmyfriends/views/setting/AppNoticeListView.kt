@@ -3,6 +3,7 @@ package com.devhouse.dearmyfriends.views.setting
 import android.widget.Button
 import com.devhouse.dearmyfriends.R
 import com.devhouse.dearmyfriends.base.BaseActivity
+import com.devhouse.dearmyfriends.item.AppNotice
 
 class AppNoticeListView: BaseActivity(R.layout.activity_app_notice) {
 
@@ -22,5 +23,9 @@ class AppNoticeListView: BaseActivity(R.layout.activity_app_notice) {
 
     override fun initAction() {
         super.initAction()
+    }
+
+    fun moveView(info: AppNotice) {
+
     }
 }

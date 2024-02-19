@@ -95,3 +95,11 @@ data class DeviceInfo (
         return json
     }
 }
+
+data class AppNotice (
+    var title: String = "",
+    var content: String = "",
+    var regDate: String = ""
+) {
+
+}
