@@ -20,6 +20,9 @@ class CheckVersionView: BaseActivity(R.layout.activity_check_version) {
     override fun initView() {
         super.initView()
 
+        checkVersionLabel = findViewById(R.id.version_check_info)
+        currentVersionNameLabel = findViewById(R.id.version_check_current_info)
+
         backBtn = findViewById(R.id.check_version_back)
         backBtn.setOnClickListener {
             finish()
@@ -39,7 +42,7 @@ class CheckVersionView: BaseActivity(R.layout.activity_check_version) {
 
     /* 통신 후 액션 */
     fun showUpdateInfo(versionInfo: VersionInfo) {
-        val infoHandle = Handler()
+        val infoHandle = Handler(mainLooper)
         infoHandle.post {
             val currentInfo = DeviceInfo()
             currentInfo.getDeviceInfo(GetDeviceInfoType.VERSION_CHECK)
