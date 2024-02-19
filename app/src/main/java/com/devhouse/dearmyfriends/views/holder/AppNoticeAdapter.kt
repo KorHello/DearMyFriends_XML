@@ -27,6 +27,10 @@ class AppNoticeAdapter(listParent: AppNoticeListView, noticeList: ArrayList<AppN
 
         fun bind(listener: OnClickListener, info: AppNotice) {
             itemView.setOnClickListener(listener)
+
+            titleLabel = itemView.findViewById(R.id.app_notice_title)
+            dateLabel = itemView.findViewById(R.id.app_notice_date)
+
             titleLabel.text = info.title
             dateLabel.text = info.regDate
         }

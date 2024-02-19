@@ -2,6 +2,7 @@ package com.devhouse.dearmyfriends.viewModel
 
 import com.devhouse.dearmyfriends.IntroActivity
 import com.devhouse.dearmyfriends.base.BaseActivity
+import com.devhouse.dearmyfriends.item.AppNotice
 import com.devhouse.dearmyfriends.item.DeviceInfo
 import com.devhouse.dearmyfriends.item.MsgPopInfo
 import com.devhouse.dearmyfriends.item.RequestInfo
@@ -12,6 +13,7 @@ import com.devhouse.dearmyfriends.mng.GetDeviceInfoType
 import com.devhouse.dearmyfriends.mng.PathType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.devhouse.dearmyfriends.mng.ToolManager
+import com.devhouse.dearmyfriends.views.setting.AppNoticeListView
 import com.devhouse.dearmyfriends.views.setting.CheckVersionView
 import com.devhouse.dearmyfriends.views.setting.PushSettingView
 import com.google.gson.Gson
@@ -25,6 +27,7 @@ class CommonViewModel: ResAction {
     var introV: IntroActivity? = null
     var checkVersionV: CheckVersionView? = null
     var pushAlarmV: PushSettingView? = null
+    var noticeListV: AppNoticeListView? = null
 
     private var pushState: Boolean = false
 
@@ -38,6 +41,10 @@ class CommonViewModel: ResAction {
 
     constructor(pushAlarm: PushSettingView) {
         this.pushAlarmV = pushAlarm
+    }
+
+    constructor(noticeV: AppNoticeListView) {
+        this.noticeListV = noticeV
     }
 
     fun callVersionInfo() {
@@ -80,6 +87,16 @@ class CommonViewModel: ResAction {
         CallManager(reqInfo).postCall(this)
     }
 
+    fun callGetAppNotices() {
+        val deviceInfo = DeviceInfo()
+        deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
+
+        val reqInfo = RequestInfo()
+        reqInfo.setData(PathType.GET_APP_NOTICE, null)
+
+        CallManager(reqInfo).postCall(this)
+    }
+
     /* ResAction */
     override fun successAct(path: PathType, resInfo: ResInfo) {
         if(path == PathType.VERSION_CHECK) {
@@ -108,6 +125,19 @@ class CommonViewModel: ResAction {
         } else if (path == PathType.UPDATE_PUSH_STATE) {
             this.pushAlarmV?.let { pushSettingView: PushSettingView ->
                 pushSettingView.switchStateChange(this.pushState)
+            }
+        } else if (path == PathType.GET_APP_NOTICE) {
+            var notiLists: ArrayList<AppNotice> = ArrayList<AppNotice>()
+            if(resInfo.bodyArray.size() > 0) {
+                for(item in resInfo.bodyArray) {
+                    val jsonItem = item.asJsonObject
+                    val data = Gson().fromJson<AppNotice>(jsonItem.toString(), AppNotice::class.java)
+                    notiLists.add(data)
+                }
+            }
+
+            noticeListV?.let { appNoticeListView: AppNoticeListView ->
+                appNoticeListView.loadNotices(notiLists)
             }
         }
     }
