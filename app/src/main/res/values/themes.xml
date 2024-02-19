@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.DearMyFriends" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="switchTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorControlActivated">#1C6D9B</item>
+        <item name="colorSwitchThumbNormal">#C1C1C1</item>
+        <item name="android:colorForeground">#cdcdcd</item>
+    </style>
 </resources>

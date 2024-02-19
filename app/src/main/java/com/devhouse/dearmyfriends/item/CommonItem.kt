@@ -81,4 +81,10 @@ data class DeviceInfo (
 
         return json
     }
+
+    fun makeParamGetPushState(): JsonObject {
+        val json = JsonObject()
+        json.addProperty("deviceId", this.uuid)
+        return json
+    }
 }

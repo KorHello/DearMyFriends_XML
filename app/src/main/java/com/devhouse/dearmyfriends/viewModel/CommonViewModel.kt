@@ -13,6 +13,7 @@ import com.devhouse.dearmyfriends.mng.PathType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.devhouse.dearmyfriends.mng.ToolManager
 import com.devhouse.dearmyfriends.views.setting.CheckVersionView
+import com.devhouse.dearmyfriends.views.setting.PushSettingView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 
@@ -23,6 +24,7 @@ class CommonViewModel: ResAction {
 
     var introV: IntroActivity? = null
     var checkVersionV: CheckVersionView? = null
+    var pushAlarmV: PushSettingView? = null
 
     constructor(intro: IntroActivity) {
         this.introV = intro
@@ -32,6 +34,10 @@ class CommonViewModel: ResAction {
         this.checkVersionV = checkVersion
     }
 
+    constructor(pushAlarm: PushSettingView) {
+        this.pushAlarmV = pushAlarm
+    }
+
     fun callVersionInfo() {
         val deviceInfo = DeviceInfo()
         deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
@@ -39,6 +45,17 @@ class CommonViewModel: ResAction {
         val param: JsonObject = deviceInfo.makeParam()
         val reqInfo = RequestInfo()
         reqInfo.setData(PathType.VERSION_CHECK, param)
+
+        CallManager(reqInfo).postCall(this)
+    }
+
+    fun callPushState() {
+        val deviceInfo = DeviceInfo()
+        deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
+
+        val param: JsonObject = deviceInfo.makeParamGetPushState()
+        val reqInfo = RequestInfo()
+        reqInfo.setData(PathType.GET_PUSH_STATE, param)
 
         CallManager(reqInfo).postCall(this)
     }
@@ -56,6 +73,17 @@ class CommonViewModel: ResAction {
                 this.checkVersionV?.let { checkVersionView: CheckVersionView ->
                     checkVersionView.showUpdateInfo(data)
                 }
+            }
+        } else if (path == PathType.GET_PUSH_STATE) {
+            var status = false
+
+            val pushState = resInfo.bodyDic.get("pushOnOff").asString
+            if("Y".equals(pushState)) {
+                status = true
+            }
+
+            this.pushAlarmV?.let { pushSettingView: PushSettingView ->
+                pushSettingView.switchStateChange(status)
             }
         }
     }
