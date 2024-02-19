@@ -1,5 +1,6 @@
 package com.devhouse.dearmyfriends.views.setting
 
+import android.content.Intent
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,9 +23,10 @@ class SettingMainListView: BaseActivity(R.layout.activity_setting_main) {
             finish()
         }
 
-        val settingMenuAdt = SettingMainAdapter()
+        val settingMenuAdt = SettingMainAdapter(this)
         mainList.adapter = settingMenuAdt
         mainList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        
     }
 
     override fun initModel() {
@@ -34,5 +36,21 @@ class SettingMainListView: BaseActivity(R.layout.activity_setting_main) {
 
     override fun initAction() {
         super.initAction()
+    }
+
+    fun moveView(moveInt: Int) {
+        var intent: Intent? = null
+
+        if(moveInt == 0) {
+            intent = Intent(this, AppNoticeListView::class.java)
+        } else if (moveInt == 1) {
+            intent = Intent(this, PushSettingView::class.java)
+        } else if (moveInt == 2) {
+            intent = Intent(this, CheckVersionView::class.java)
+        }
+
+        intent?.let { intent: Intent ->
+            startActivity(intent)
+        }
     }
 }

@@ -29,6 +29,9 @@
         </activity>
         <activity android:name=".MainActivity"/>
         <activity android:name=".views.setting.SettingMainListView"/>
+        <activity android:name=".views.setting.AppNoticeListView"/>
+        <activity android:name=".views.setting.CheckVersionView"/>
+        <activity android:name=".views.setting.PushSettingView"/>
     </application>
 
 </manifest>
