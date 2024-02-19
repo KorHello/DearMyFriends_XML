@@ -26,7 +26,6 @@ class SettingMainListView: BaseActivity(R.layout.activity_setting_main) {
         val settingMenuAdt = SettingMainAdapter(this)
         mainList.adapter = settingMenuAdt
         mainList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        
     }
 
     override fun initModel() {

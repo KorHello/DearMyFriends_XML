@@ -14,7 +14,7 @@
         android:layout_height="60dp">
 
         <Button
-            android:id="@+id/setting_main_back"
+            android:id="@+id/check_version_back"
             android:layout_marginStart="16dp"
             android:layout_width="24dp"
             android:layout_height="24dp"
