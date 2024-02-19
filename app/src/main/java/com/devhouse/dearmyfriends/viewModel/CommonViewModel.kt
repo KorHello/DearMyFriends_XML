@@ -12,6 +12,7 @@ import com.devhouse.dearmyfriends.mng.GetDeviceInfoType
 import com.devhouse.dearmyfriends.mng.PathType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.devhouse.dearmyfriends.mng.ToolManager
+import com.devhouse.dearmyfriends.views.setting.CheckVersionView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 
@@ -20,10 +21,15 @@ class CommonViewModel: ResAction {
     var cmmMsgBox: MsgPopInfo = MsgPopInfo()
     var testString:String = ""
 
-    var introV: IntroActivity
+    var introV: IntroActivity? = null
+    var checkVersionV: CheckVersionView? = null
 
     constructor(intro: IntroActivity) {
         this.introV = intro
+    }
+
+    constructor(checkVersion: CheckVersionView) {
+        this.checkVersionV = checkVersion
     }
 
     fun callVersionInfo() {
@@ -43,7 +49,13 @@ class CommonViewModel: ResAction {
             // 데이터 파싱 테스트
             val data = Gson().fromJson<VersionInfo>(resInfo.bodyDic.toString(), VersionInfo::class.java)
             if(introV != null) {
-                introV.updateAction(data.checkUpdate(), data)
+                this.introV?.let { introActivity: IntroActivity ->
+                    introActivity.updateAction(data.checkUpdate(), data)
+                }
+            } else if (checkVersionV != null) {
+                this.checkVersionV?.let { checkVersionView: CheckVersionView ->
+                    checkVersionView.showUpdateInfo(data)
+                }
             }
         }
     }

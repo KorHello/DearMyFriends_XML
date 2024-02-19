@@ -53,10 +53,11 @@
             android:text="현재버전"/>
 
         <TextView
+            android:id="@+id/version_check_current_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="1.0.0"/>
+            android:text="-"/>
 
         <View
             android:layout_marginTop="16dp"
@@ -67,9 +68,10 @@
             />
 
         <TextView
+            android:id="@+id/version_check_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="최신버전 입니다."/>
+            android:text="-"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
