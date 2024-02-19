@@ -26,6 +26,8 @@ class CommonViewModel: ResAction {
     var checkVersionV: CheckVersionView? = null
     var pushAlarmV: PushSettingView? = null
 
+    private var pushState: Boolean = false
+
     constructor(intro: IntroActivity) {
         this.introV = intro
     }
@@ -60,6 +62,24 @@ class CommonViewModel: ResAction {
         CallManager(reqInfo).postCall(this)
     }
 
+    fun callChangePushState(currentState: Boolean) {
+        this.pushState = currentState
+
+        var pushStateStr = "Y"
+        if(!this.pushState) {
+            pushStateStr = "N"
+        }
+
+        val deviceInfo = DeviceInfo()
+        deviceInfo.getDeviceInfo(GetDeviceInfoType.CALL_INTRO_API)
+
+        val param: JsonObject = deviceInfo.makeParamChangePushState(pushStateStr)
+        val reqInfo = RequestInfo()
+        reqInfo.setData(PathType.UPDATE_PUSH_STATE, param)
+
+        CallManager(reqInfo).postCall(this)
+    }
+
     /* ResAction */
     override fun successAct(path: PathType, resInfo: ResInfo) {
         if(path == PathType.VERSION_CHECK) {
@@ -84,6 +104,10 @@ class CommonViewModel: ResAction {
 
             this.pushAlarmV?.let { pushSettingView: PushSettingView ->
                 pushSettingView.switchStateChange(status)
+            }
+        } else if (path == PathType.UPDATE_PUSH_STATE) {
+            this.pushAlarmV?.let { pushSettingView: PushSettingView ->
+                pushSettingView.switchStateChange(this.pushState)
             }
         }
     }
