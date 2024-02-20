@@ -23,6 +23,7 @@ class PushSettingView: BaseActivity(R.layout.activity_setting_push) {
         switchBtn = findViewById(R.id.all_push_state)
         switchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!this.isInitAction) {
+                this.loadingBarAction(true)
                 this.commonVM.callChangePushState(isChecked)
             }
         }
@@ -35,6 +36,9 @@ class PushSettingView: BaseActivity(R.layout.activity_setting_push) {
 
     override fun initModel() {
         super.initModel()
+
+        this.lottieLoadingV = findViewById(R.id.lottie_loading_view) // 로티 인잇
+        this.loadingBarAction(true)
 
         commonVM = CommonViewModel(this)
         commonVM.callPushState()
@@ -49,6 +53,8 @@ class PushSettingView: BaseActivity(R.layout.activity_setting_push) {
         this.allState = state
 
         Handler(mainLooper).post {
+            this.loadingBarAction(false)
+
             this.switchBtn.isChecked = state
             this.isInitAction = false
         }

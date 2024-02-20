@@ -32,6 +32,9 @@ class CheckVersionView: BaseActivity(R.layout.activity_check_version) {
     override fun initModel() {
         super.initModel()
 
+        this.lottieLoadingV = findViewById(R.id.lottie_loading_view) // 로티 인잇
+        this.loadingBarAction(true)
+
         val cmmVM = CommonViewModel(this)
         cmmVM.callVersionInfo()
     }
@@ -44,6 +47,8 @@ class CheckVersionView: BaseActivity(R.layout.activity_check_version) {
     fun showUpdateInfo(versionInfo: VersionInfo) {
         val infoHandle = Handler(mainLooper)
         infoHandle.post {
+            this.loadingBarAction(false)
+
             val currentInfo = DeviceInfo()
             currentInfo.getDeviceInfo(GetDeviceInfoType.VERSION_CHECK)
 

@@ -60,6 +60,10 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
     override fun initModel() {
         super.initModel()
 
+        // 로티 인풋
+        this.lottieLoadingV = findViewById(R.id.lottie_loading_view) // 로티 인잇
+        this.loadingBarAction(true)
+
         sentenceVM = SentenceViewModel(this)
         sentenceVM.getSetences()
     }
@@ -75,8 +79,9 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
                 startActivity(moveSetting)
             } else if (view.id == R.id.like_cnt_btn) {
                 // 좋아요 통신
+                this.loadingBarAction(true)
                 sentenceVM.callLikeCntAdd(this.sentenceArray[currentNum].sentenceId)
-            } else if (view.id == R.id.main_sentence_box) {
+            } else if (view.id == R.id.sentence_title_label) {
                 this.copySentenceAndWriter()
             }
         }
@@ -114,6 +119,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
 
     fun showSentenceView() {
         httpHandle.post {
+            this.loadingBarAction(false)
             contentLabel.text = this.sentenceArray[currentNum].content
             writerLabel.text = this.sentenceArray[currentNum].writer
             likeCntLabel.text = this.sentenceArray[currentNum].likeCnt
@@ -152,10 +158,8 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
     }
 
     override fun onSwipeTop() {
-        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Top Swipe")
     }
 
     override fun onSwipeBottom() {
-        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Bottom Swipe")
     }
 }

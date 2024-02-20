@@ -74,4 +74,6 @@
             android:textAlignment="center"
             android:text="-"/>
     </LinearLayout>
+
+    <include layout="@layout/loading_view"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

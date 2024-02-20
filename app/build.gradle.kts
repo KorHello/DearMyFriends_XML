@@ -72,6 +72,7 @@ dependencies {
 
     // ui
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+    implementation("com.airbnb.android:lottie:2.8.0")
 
     // HTTP
     implementation("com.squareup.okhttp3:okhttp:4.9.3")

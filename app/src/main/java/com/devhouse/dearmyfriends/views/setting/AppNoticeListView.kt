@@ -28,6 +28,9 @@ class AppNoticeListView: BaseActivity(R.layout.activity_app_notice) {
     override fun initModel() {
         super.initModel()
 
+        this.lottieLoadingV = findViewById(R.id.lottie_loading_view) // 로티 인잇
+        this.loadingBarAction(true)
+
         val commonVM = CommonViewModel(this)
         commonVM.callGetAppNotices()
     }
@@ -38,6 +41,8 @@ class AppNoticeListView: BaseActivity(R.layout.activity_app_notice) {
 
     fun loadNotices(appNotices: ArrayList<AppNotice>) {
         Handler(mainLooper).post {
+            this.loadingBarAction(false)
+
             val adapter = AppNoticeAdapter(this, appNotices)
             notiList.adapter = adapter
             notiList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
