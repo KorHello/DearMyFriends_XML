@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.devhouse.dearmyfriends.base.BaseActivity
 import com.devhouse.dearmyfriends.item.Sentence
@@ -18,7 +19,9 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
     lateinit var swipeView: View
     lateinit var contentLabel: TextView
     lateinit var writerLabel: TextView
+    lateinit var likeCntLabel: TextView
     lateinit var sentenceVM: SentenceViewModel
+    lateinit var likeCntBtn: LinearLayout
 
     var sentenceArray: ArrayList<Sentence> = ArrayList<Sentence>()
     var currentNum: Int = 0
@@ -32,8 +35,11 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
         swipeView = findViewById(R.id.swipe_main_view)
         contentLabel = findViewById(R.id.sentence_title_label)
         writerLabel = findViewById(R.id.sentence_msg_label)
+        likeCntLabel = findViewById(R.id.main_like_cnt_label)
+        likeCntBtn = findViewById(R.id.like_cnt_btn)
 
         settingBtn.setOnClickListener(this)
+        likeCntBtn.setOnClickListener(this)
     }
 
     override fun initModel() {
@@ -52,6 +58,9 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
             if(view.id == R.id.main_btn_setting) {
                 val moveSetting = Intent(this, SettingMainListView::class.java)
                 startActivity(moveSetting)
+            } else if (view.id == R.id.like_cnt_btn) {
+                // 좋아요 통신
+                sentenceVM.callLikeCntAdd(this.sentenceArray[currentNum].sentenceId)
             }
         }
     }
@@ -77,10 +86,20 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
         }
     }
 
+    fun addAfterAction() {
+        val likeCnt = this.sentenceArray[currentNum].likeCnt.toInt() + 1
+        this.sentenceArray[currentNum].likeCnt = likeCnt.toString()
+
+        Handler(mainLooper).post {
+            showSentenceView()
+        }
+    }
+
     fun showSentenceView() {
         httpHandle.post {
             contentLabel.text = this.sentenceArray[currentNum].content
             writerLabel.text = this.sentenceArray[currentNum].writer
+            likeCntLabel.text = this.sentenceArray[currentNum].likeCnt
         }
     }
 }

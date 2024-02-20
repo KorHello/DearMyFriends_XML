@@ -12,7 +12,8 @@ enum class PathType(var pathString: String) {
 
     GET_PUSH_STATE("/mem/getPushState.dmfap"),
     UPDATE_PUSH_STATE("/cmm/updatePushInfo.dmfap"),
-    GET_APP_NOTICE("/cmm/getAppNotice.dmfap")
+    GET_APP_NOTICE("/cmm/getAppNotice.dmfap"),
+    ADD_LIKE_CNT("/stn/addLikeCnt.dmfap"),
 }
 
 enum class BodyType {

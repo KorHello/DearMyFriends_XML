@@ -10,6 +10,7 @@ import com.devhouse.dearmyfriends.mng.LogType
 import com.devhouse.dearmyfriends.mng.PathType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 
 class SentenceViewModel: ResAction {
 
@@ -22,6 +23,15 @@ class SentenceViewModel: ResAction {
     fun getSetences() {
         val reqInfo = RequestInfo()
         reqInfo.setData(PathType.GET_SENTENCE, null)
+        CallManager(reqInfo).postCall(this)
+    }
+
+    fun callLikeCntAdd(sentenceId: String) {
+        val param: JsonObject = JsonObject()
+        param.addProperty("sentenceId", sentenceId)
+
+        val reqInfo = RequestInfo()
+        reqInfo.setData(PathType.ADD_LIKE_CNT, param)
         CallManager(reqInfo).postCall(this)
     }
 
@@ -39,6 +49,8 @@ class SentenceViewModel: ResAction {
             }
 
             mainActivity.showSentence(sentenceArray)
+        } else if (path == PathType.ADD_LIKE_CNT) {
+            mainActivity.addAfterAction()
         }
     }
 

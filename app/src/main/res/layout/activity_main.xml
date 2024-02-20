@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:text="명언테스트"
+            android:text="-"
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"/>
@@ -63,9 +63,35 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textSize="13sp"
-            android:text="- 작성자 -"
+            android:text="-"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"/>
+
+        <LinearLayout
+            android:id="@+id/like_cnt_btn"
+            android:padding="10dp"
+            android:background="@drawable/all_border_likebtn"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:src="@drawable/icon_heart"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                />
+
+            <TextView
+                android:id="@+id/main_like_cnt_label"
+                android:text="10"
+                android:textSize="12sp"
+                android:layout_marginStart="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
