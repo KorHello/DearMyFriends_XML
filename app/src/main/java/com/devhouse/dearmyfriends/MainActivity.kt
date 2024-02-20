@@ -108,7 +108,7 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
         httpHandle.post {
             this.loadingBarAction(false)
             contentLabel.text = this.sentenceArray[currentNum].content
-            writerLabel.text = this.sentenceArray[currentNum].writer
+            writerLabel.text = "- " + this.sentenceArray[currentNum].writer + " -"
             likeCntLabel.text = this.sentenceArray[currentNum].likeCnt
         }
     }
