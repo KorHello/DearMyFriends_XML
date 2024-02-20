@@ -27,7 +27,8 @@ enum class LogType(var title: String) {
     CHECK_HTTPERROR("CallError_"),
     CHECK_RESINFO("resParseInfo_"),
 
-    CHECK_ITEMDATA("checkItemData_")
+    CHECK_ITEMDATA("checkItemData_"),
+    CHECK_SWIPE("checkSwipeDirection_")
 }
 
 enum class PopType {

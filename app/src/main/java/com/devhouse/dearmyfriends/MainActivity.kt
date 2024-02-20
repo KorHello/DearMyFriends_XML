@@ -2,6 +2,7 @@ package com.devhouse.dearmyfriends
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Handler
@@ -16,11 +17,13 @@ import com.devhouse.dearmyfriends.item.MsgPopInfo
 import com.devhouse.dearmyfriends.item.Sentence
 import com.devhouse.dearmyfriends.mng.LogManager
 import com.devhouse.dearmyfriends.mng.LogType
+import com.devhouse.dearmyfriends.mng.OnSwipeTouchListener
 import com.devhouse.dearmyfriends.mng.PopType
+import com.devhouse.dearmyfriends.mng.SwipeAction
 import com.devhouse.dearmyfriends.viewModel.SentenceViewModel
 import com.devhouse.dearmyfriends.views.setting.SettingMainListView
 
-class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
+class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, SwipeAction {
 
     lateinit var sentenceBox: LinearLayout
     lateinit var settingBtn: Button
@@ -47,9 +50,11 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
         likeCntLabel = findViewById(R.id.main_like_cnt_label)
         likeCntBtn = findViewById(R.id.like_cnt_btn)
 
-        sentenceBox.setOnClickListener(this)
+        contentLabel.setOnClickListener(this)
         settingBtn.setOnClickListener(this)
         likeCntBtn.setOnClickListener(this)
+
+        swipeView.setOnTouchListener(OnSwipeTouchListener(this))
     }
 
     override fun initModel() {
@@ -128,5 +133,29 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
             msgPopInfo.content = "복사가 완료되었습니다. \nSNS 나 문자를 통해 명언을 공유해보세요!"
             this.showMsgPop(msgPopInfo)
         }
+    }
+
+    override fun onSwipeRight() {
+        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Left -> Right Swipe")
+        if(0 < currentNum) {
+            currentNum = currentNum - 1
+            this.showSentenceView()
+        }
+    }
+
+    override fun onSwipeLeft() {
+        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Right -> Left Swipe")
+        if(currentNum + 1 < sentenceArray.size) {
+            currentNum = currentNum + 1
+            this.showSentenceView()
+        }
+    }
+
+    override fun onSwipeTop() {
+        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Top Swipe")
+    }
+
+    override fun onSwipeBottom() {
+        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Bottom Swipe")
     }
 }
