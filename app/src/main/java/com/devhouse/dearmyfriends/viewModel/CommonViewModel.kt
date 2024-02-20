@@ -21,10 +21,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 
 class CommonViewModel: ResAction {
-
-    var cmmMsgBox: MsgPopInfo = MsgPopInfo()
-    var testString:String = ""
-
     var introV: IntroActivity? = null
     var checkVersionV: CheckVersionView? = null
     var pushAlarmV: PushSettingView? = null

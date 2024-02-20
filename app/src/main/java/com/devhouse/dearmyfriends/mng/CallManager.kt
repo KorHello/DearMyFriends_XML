@@ -44,10 +44,6 @@ class CallManager(req: RequestInfo) {
 
                 val resInfo = ResInfo()
                 response.body?.let {
-                    // 널이 아니면 여길 탐,
-                    // Swift 의 경우엔 if let obj = null 이 될만한 오브젝트 인데, 이걸 이렇게 태우는듯 함
-                    // 이미,. 코틀린은 람다가 거의 생활화가 되어 있는듯 함
-                    // OkHttp 사용시, response.body.string() 을 두번 호출시 오류나니 주의, Log 를 찍을거면 해당 객체에 들어가서 찍어보기 ( ResInfo 완성되어 있음, 여기 안찍히면 이대로 안내려오는것임. )
                     resInfo.parseData(it.string())
                     resAction.successAct(reqInfo.path, resInfo)
                 }

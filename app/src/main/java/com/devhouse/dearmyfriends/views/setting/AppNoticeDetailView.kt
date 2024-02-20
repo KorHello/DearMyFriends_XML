@@ -28,9 +28,9 @@ class AppNoticeDetailView: BaseActivity(R.layout.activity_notice_detail) {
         }
 
         val intent = intent
-        var appNotiTitle = intent.getStringExtra("appNoticeTitle")
-        var appNotiDate = intent.getStringExtra("appNoticeDate")
-        var appNotiContent = intent.getStringExtra("appNoticeContent")
+        val appNotiTitle = intent.getStringExtra("appNoticeTitle")
+        val appNotiDate = intent.getStringExtra("appNoticeDate")
+        val appNotiContent = intent.getStringExtra("appNoticeContent")
 
         appNotiTitle?.let { notiTitle ->
             appNotice.title = notiTitle

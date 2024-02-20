@@ -63,11 +63,12 @@ data class ResInfo (
             } else {
                 this.bodyType = BodyType.NONE
             }
-
-            LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resCode)
-            LogManager.instance.consoleLog(LogType.CHECK_RESINFO, this.resMsg)
         } catch (e: Exception) {
-            LogManager.instance.consoleLog(LogType.CHECK_HTTPERROR, e.localizedMessage)
+            this.resCode = "9990"
+            this.resMsg = "통신 중 오류가 발생하였습니다. 잠시 후 다시 시도해주세요."
+            this.bodyType = BodyType.NONE
+            this.bodyDic = JsonObject()
+            this.bodyArray = JsonArray()
         }
     }
 }

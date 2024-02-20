@@ -47,7 +47,6 @@ class AppNoticeAdapter(listParent: AppNoticeListView, noticeList: ArrayList<AppN
 
     override fun onBindViewHolder(holder: AppNoticeHolder, position: Int) {
         val listener = View.OnClickListener { it ->
-            LogManager.instance.consoleLog(LogType.CHECK_ITEMDATA, "Check Count ::: " + position.toString())
             listParentV.moveView(notiList[position])
         }
 

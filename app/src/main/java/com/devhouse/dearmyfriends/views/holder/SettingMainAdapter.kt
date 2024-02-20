@@ -41,7 +41,6 @@ class SettingMainAdapter(mainV: SettingMainListView): RecyclerView.Adapter<Setti
 
     override fun onBindViewHolder(holder: SettingMainHolder, position: Int) {
         val listener = View.OnClickListener { it ->
-            LogManager.instance.consoleLog(LogType.CHECK_ITEMDATA, "Check Count ::: " + position.toString())
             settingMain.moveView(position)
         }
 
