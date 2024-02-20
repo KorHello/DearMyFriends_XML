@@ -1,13 +1,13 @@
 package com.devhouse.dearmyfriends.viewModel
 
 import com.devhouse.dearmyfriends.MainActivity
+import com.devhouse.dearmyfriends.item.MsgPopInfo
 import com.devhouse.dearmyfriends.item.RequestInfo
 import com.devhouse.dearmyfriends.item.ResInfo
 import com.devhouse.dearmyfriends.item.Sentence
 import com.devhouse.dearmyfriends.mng.CallManager
-import com.devhouse.dearmyfriends.mng.LogManager
-import com.devhouse.dearmyfriends.mng.LogType
 import com.devhouse.dearmyfriends.mng.PathType
+import com.devhouse.dearmyfriends.mng.PopType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -55,6 +55,11 @@ class SentenceViewModel: ResAction {
     }
 
     override fun failAct(path: PathType, resInfo: ResInfo) {
+        val msgInfo = MsgPopInfo()
+        msgInfo.type = PopType.MSG
+        msgInfo.title = "알림"
+        msgInfo.content = resInfo.resMsg
 
+        mainActivity.showMsgPop(msgInfo)
     }
 }

@@ -74,6 +74,22 @@ open class BaseActivity(layout: Int): ComponentActivity() {
         }
     }
 
+    open fun showExitPop(info: MsgPopInfo) {
+        Handler(mainLooper).post {
+            this.loadingBarAction(false)
+            if(info.type == PopType.MSG) {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle(info.title).setMessage(info.content)
+                    .setPositiveButton("확인", DialogInterface.OnClickListener { dialog, id ->
+                        System.exit(0)
+                    })
+                alert.show()
+            } else if (info.type == PopType.TOAST) {
+                Toast.makeText(this, info.content, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     open fun loadingBarAction(state: Boolean) {
         lottieLoadingV?.let { loadingView: LinearLayout ->
             if(state) {

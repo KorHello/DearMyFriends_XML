@@ -11,6 +11,7 @@ import com.devhouse.dearmyfriends.item.VersionInfo
 import com.devhouse.dearmyfriends.mng.CallManager
 import com.devhouse.dearmyfriends.mng.GetDeviceInfoType
 import com.devhouse.dearmyfriends.mng.PathType
+import com.devhouse.dearmyfriends.mng.PopType
 import com.devhouse.dearmyfriends.mng.ResAction
 import com.devhouse.dearmyfriends.mng.ToolManager
 import com.devhouse.dearmyfriends.views.setting.AppNoticeListView
@@ -144,7 +145,32 @@ class CommonViewModel: ResAction {
 
     override fun failAct(path: PathType, resInfo: ResInfo) {
         if(path == PathType.VERSION_CHECK) {
-            
+            introV?.let { introActivity: IntroActivity ->
+                val msgInfo = MsgPopInfo()
+                msgInfo.type = PopType.MSG
+                msgInfo.title = "알림"
+                msgInfo.content = "정보를 불러오던 중 오류가 발생하였습니다. 잠시 후 다시 실행해주세요"
+                introActivity.showExitPop(msgInfo)
+            }
+        } else {
+            val msgInfo = MsgPopInfo()
+            msgInfo.type = PopType.MSG
+            msgInfo.title = "알림"
+            msgInfo.content = resInfo.resMsg
+
+            if (this.checkVersionV != null) {
+                checkVersionV?.let { checkVersionView: CheckVersionView ->
+                    checkVersionView.showMsgPop(msgInfo)
+                }
+            } else if (this.pushAlarmV != null) {
+                pushAlarmV?.let { view: PushSettingView ->
+                    view.showMsgPop(msgInfo)
+                }
+            } else if (this.noticeListV != null) {
+                noticeListV?.let { view: AppNoticeListView ->
+                    view.showMsgPop(msgInfo)
+                }
+            }
         }
     }
 }

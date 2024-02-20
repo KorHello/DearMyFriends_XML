@@ -2,11 +2,9 @@ package com.devhouse.dearmyfriends
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Handler
-import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.Button
@@ -87,17 +85,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
         }
     }
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        when(event.action) {
-            MotionEvent.ACTION_SCROLL -> {
-
-                return true
-            }
-        }
-
-        return false
-    }
-
     /* show Sentence */
     fun showSentence(sentences: ArrayList<Sentence>) {
         this.sentenceArray = sentences
@@ -142,7 +129,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
     }
 
     override fun onSwipeRight() {
-        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Left -> Right Swipe")
         if(0 < currentNum) {
             currentNum = currentNum - 1
             this.showSentenceView()
@@ -150,7 +136,6 @@ class MainActivity : BaseActivity(R.layout.activity_main), OnClickListener, Swip
     }
 
     override fun onSwipeLeft() {
-        LogManager.instance.consoleLog(LogType.CHECK_SWIPE, "Right -> Left Swipe")
         if(currentNum + 1 < sentenceArray.size) {
             currentNum = currentNum + 1
             this.showSentenceView()
