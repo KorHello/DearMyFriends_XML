@@ -1,6 +1,9 @@
 package com.devhouse.dearmyfriends
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
@@ -9,12 +12,17 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.devhouse.dearmyfriends.base.BaseActivity
+import com.devhouse.dearmyfriends.item.MsgPopInfo
 import com.devhouse.dearmyfriends.item.Sentence
+import com.devhouse.dearmyfriends.mng.LogManager
+import com.devhouse.dearmyfriends.mng.LogType
+import com.devhouse.dearmyfriends.mng.PopType
 import com.devhouse.dearmyfriends.viewModel.SentenceViewModel
 import com.devhouse.dearmyfriends.views.setting.SettingMainListView
 
 class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
 
+    lateinit var sentenceBox: LinearLayout
     lateinit var settingBtn: Button
     lateinit var swipeView: View
     lateinit var contentLabel: TextView
@@ -31,6 +39,7 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
     override fun initView() {
         super.initView()
 
+        sentenceBox = findViewById(R.id.main_sentence_box)
         settingBtn = findViewById(R.id.main_btn_setting)
         swipeView = findViewById(R.id.swipe_main_view)
         contentLabel = findViewById(R.id.sentence_title_label)
@@ -38,6 +47,7 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
         likeCntLabel = findViewById(R.id.main_like_cnt_label)
         likeCntBtn = findViewById(R.id.like_cnt_btn)
 
+        sentenceBox.setOnClickListener(this)
         settingBtn.setOnClickListener(this)
         likeCntBtn.setOnClickListener(this)
     }
@@ -61,6 +71,8 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
             } else if (view.id == R.id.like_cnt_btn) {
                 // 좋아요 통신
                 sentenceVM.callLikeCntAdd(this.sentenceArray[currentNum].sentenceId)
+            } else if (view.id == R.id.main_sentence_box) {
+                this.copySentenceAndWriter()
             }
         }
     }
@@ -100,6 +112,21 @@ class MainActivity: BaseActivity(R.layout.activity_main), OnClickListener {
             contentLabel.text = this.sentenceArray[currentNum].content
             writerLabel.text = this.sentenceArray[currentNum].writer
             likeCntLabel.text = this.sentenceArray[currentNum].likeCnt
+        }
+    }
+
+    fun copySentenceAndWriter() {
+        val copyMsg = this.sentenceArray[currentNum].content + "\n\n" + this.sentenceArray[currentNum].writer
+        LogManager.instance.consoleLog(LogType.CHECK_ITEMDATA, copyMsg)
+
+        val clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager.setPrimaryClip(ClipData.newPlainText("", copyMsg))
+
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2) {
+            val msgPopInfo = MsgPopInfo()
+            msgPopInfo.type = PopType.TOAST
+            msgPopInfo.content = "복사가 완료되었습니다. \nSNS 나 문자를 통해 명언을 공유해보세요!"
+            this.showMsgPop(msgPopInfo)
         }
     }
 }
